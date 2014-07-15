@@ -28,6 +28,9 @@ import resources_rc
 from dwca_import_dialog import DwCAImporterDialog
 import os.path
 
+from qgis.core import QgsVectorLayer, QgsMapLayerRegistry
+from dwca.read import DwCAReader
+
 
 class DwCAImporter:
     """QGIS Plugin Implementation."""
@@ -185,6 +188,9 @@ class DwCAImporter:
         result = self.dlg.exec_()
         # See if OK was pressed
         if result:
-            # Do something useful here - delete the line containing pass and
-            # substitute with your code.
-            pass
+            l = QgsVectorLayer("Point?crs=epsg:4326", "temporary_points2", "memory")
+
+            with DwCAReader('my_archive.zip') as dwca:
+                pass
+
+            QgsMapLayerRegistry.instance().addMapLayer(l)
